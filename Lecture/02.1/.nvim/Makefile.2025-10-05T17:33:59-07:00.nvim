@@ -1,0 +1,12 @@
+hello: hello.c
+	clang $^ -o $@
+
+clean_hello:
+	rm -f hello
+
+
+sleeping: sleep.c
+	clang $^ -o$@
+
+clean_sleeping:
+	rm -f sleeping

@@ -1,0 +1,7 @@
+objects = lab3.c
+
+main: $(objects)
+	clang %^ -o %@
+
+clean:
+	rm -f main

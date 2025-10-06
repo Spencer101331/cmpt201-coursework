@@ -1,0 +1,37 @@
+#define _POSIX_C_SOURCE 200809L
+#define _DEFAULT_SOURCE
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+struct header {
+  uint64_t size;
+  struct header *next;
+};
+
+struct header *createHeader(int size) {
+  struct header *block_header = malloc(size);
+  block_header->size = size;
+  block_header->next = NULL;
+  return block_header;
+}
+
+int main() {
+  int total = 256;
+  int *start_address = sbrk(total);
+  if (*start_address == -1) {
+    perror("sbrk() failed");
+    return 1;
+  }
+
+  int size = total / 2;
+  struct header *first_block = (struct header *)start_address;
+  struct header *second_block = (struct header *)(start_address + size);
+
+  printf("start address:   %p\n", start_address);
+  printf("first block:     %p\n", first_block);
+  printf("second bolck:    %p\n", second_block);
+
+  return 0;
+}

@@ -1,0 +1,39 @@
+#define _POSIX_C_SOURCE 200809L
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+int main() {
+  char *input = NULL;
+  size_t length = 0;
+  ssize_t retvar = 0;
+  while (input != "^C") {
+    printf("Enter programs to run.\n");
+    printf("> ");
+    retvar = getline(&input, &length, stdin); // Getting user input
+    if (retvar == -1) {
+      perror("Getline failed");
+      exit(EXIT_FAILURE);
+    } else {
+      printf("%s", input);
+      input[retvar - 1] = '\0';
+      printf("%s", input);
+    }
+
+    pid_t pid = fork();
+    if (pid != 0) { // In parent
+      waitpid(pid, NULL, 0);
+    } else { // In child
+      int error = execl(input, input, NULL);
+      if (error == -1) {
+        perror("Exec failure");
+        exit(EXIT_FAILURE);
+      }
+      break;
+    }
+  }
+
+  free(input);
+  return 0;
+}

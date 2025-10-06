@@ -1,0 +1,64 @@
+#define _POSIX_C_SOURCE 200809
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define storenum 5
+
+char *alist[storenum];
+int len = 0;
+
+void remove_oldest() {
+  if (len > 0) {
+    free(alist[0]);
+    for (int i = 1; i < len; i++) {
+      alist[i - 1] = alist[i];
+    }
+    len--;
+  }
+}
+
+void update(char * str) {
+  if (len >= storenum) {
+    remove_oldest();
+  }
+  alist[4] = str;
+  len++;
+}
+
+void print_list(){
+  for(int i = 0; i < storenum; i++){
+     printf("%s", alist[i]);
+  }
+}
+
+char *get_input() {
+  ssize_t characters = 0;
+  char *str = NULL;
+  size_t length = 0;
+
+  while (1) {
+    printf("Enter input: ");
+    characters = getline(&str, &length, stdin);
+    if (characters == -1) {
+      perror("Get line failed.");
+      exit(EXIT_FAILURE);
+    } 
+  }
+  return str;
+}
+
+
+int main() {
+  char* str = get_input();
+  update(str);
+
+  if (strcmp(str, "print") == 0) {
+      print_list();
+  }
+
+  free(str);
+  for (int i = 0; i < storenum; i++)
+    free(alist[i]);
+  return 0;
+}
+

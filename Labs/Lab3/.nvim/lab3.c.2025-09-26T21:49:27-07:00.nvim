@@ -1,0 +1,36 @@
+#define _POSIX_C_SOURCE 200809
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void update(int *index) {
+  index++;
+  if (*(index) >= 5)
+    index = 0;
+}
+
+int main() {
+  ssize_t characters = 0;
+  char *str = NULL;
+  size_t length = 0;
+  int index = 0;
+
+  char *alist[5];
+  while (1) {
+    printf("Enter input: ");
+    characters = getline(&str, &length, stdin);
+    if (characters == -1) {
+      perror("Get line failed.");
+      exit(EXIT_FAILURE);
+    } else{ 
+      alist[index] = str;
+      update(&index);
+
+      for (int i = 0; i < 5; i++) {
+        printf("%s\n", alist[i]);
+      }
+    }
+  }
+  free(str);
+  return 0;
+}
