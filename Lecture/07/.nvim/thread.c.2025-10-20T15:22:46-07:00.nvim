@@ -1,0 +1,8 @@
+#define _POSIX_C_SOURCE_200809
+
+#include <pthread.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main() {
+  int reslut = pthread_create(

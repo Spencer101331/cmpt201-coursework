@@ -1,0 +1,27 @@
+#define _POSIX_C_SOURCE_200809
+#define _GNU_SOURCE
+
+#include <pthread.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <unistd.h>
+void *foo() {
+  printf("hi\n");
+  pid_t tid = gettid();
+  printf("ID: %d\n", tid);
+  return NULL;
+}
+
+int main() {
+  pthread_t *restrict thread = 0;
+  pthread_attr_t *restrict attr;
+  void *restrict arg = "hi";
+  int result = pthread_create(thread, attr, foo, arg);
+  if (result != 0) {
+    return 0;
+  }
+  void *r = 0;
+  pthread_join(*thread, &r);
+  printf("%lu\n", (uint64_t)r);
+  return 0;
+}

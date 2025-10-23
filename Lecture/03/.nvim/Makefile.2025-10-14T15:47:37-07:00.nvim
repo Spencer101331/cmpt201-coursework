@@ -1,0 +1,5 @@
+sigaction: sigaction.c
+	clang $^ -o $@ 
+
+clean_sig:
+	rm -f sigaction

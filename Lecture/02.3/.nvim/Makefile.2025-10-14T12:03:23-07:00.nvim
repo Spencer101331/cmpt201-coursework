@@ -1,0 +1,5 @@
+wait: wait.c
+	clang $^ -o $@ -fsanitizer=address
+
+clean_wait:
+	rm -f wait

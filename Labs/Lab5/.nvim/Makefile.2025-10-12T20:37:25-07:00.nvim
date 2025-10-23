@@ -1,0 +1,6 @@
+
+main: lab5.c
+	clang $^ -o $@
+
+clean:
+	rm -f main

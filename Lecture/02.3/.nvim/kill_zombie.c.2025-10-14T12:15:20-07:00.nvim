@@ -1,0 +1,10 @@
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int main(){
+  pid_t pid = fork();
+  if (pid){
+    while(pid = waitpid(-1, &wstatus, WNOHANG)) > 0) {
+    printf("Reaped child with PID %d\n", pid);
+}

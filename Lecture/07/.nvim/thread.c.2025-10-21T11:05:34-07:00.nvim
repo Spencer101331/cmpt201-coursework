@@ -1,0 +1,22 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+void *thread_print(void *arg) {
+  char *message = (char *)arg;
+  printf("Thread message: %s\n", message);
+  return (void *)strlen(message);
+}
+int main() {
+  pthread_t thread;
+  void *arg = "Hello, this is thread.";
+  pthread_create(&thread, NULL, thread_print, arg);
+  /*
+  void *retval;
+  pthread_join(thread, &retval);
+  long long len = (long long)retval;
+  printf("The return value from pthread_join is: %lld.\n", len);
+  */
+  return 0;
+}

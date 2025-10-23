@@ -1,0 +1,13 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+void *thread_print(void *arg) {
+  printf("Hello this is thread!\n");
+  return 0;
+}
+int main() {
+  pthread_t thread = 0;
+  pthread_create(&thread, NULL, thread_print, NULL);
+}

@@ -1,0 +1,5 @@
+sigaction: sigaction.c
+	clang $^ -o $@ -fsanitize=address
+
+clean_sig:
+	rm -f sigaction

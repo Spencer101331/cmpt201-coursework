@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int main() {
+  pid_t pid = fork();
+  if (pid == 0) { // In child
+    printf("In child\n");
+    execlp("ls", "ls", "-a", "-l", "-h");
+  } else { // In parent
+    printf("In parent\n");
+    execlp("ls", "ls", "-a");
+  }
+
+  printf("%d\n", getpid());
+  return 0;
+}
